@@ -4,6 +4,7 @@ import com.anesti.expensemanagement.Currency;
 import com.anesti.expensemanagement.Money;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class CurrencyConverter {
 
@@ -26,7 +27,7 @@ public class CurrencyConverter {
     double getRateFactor(Money originalMoney) throws IOException, InterruptedException {
         String queryConversion = originalMoney.getCurrency().toString() + "_" + toCurrency.toString();
 
-        String jsonResponse = httpRateRequester.queryExchangeRate(queryConversion).body();
+        InputStream jsonResponse = httpRateRequester.queryExchangeRate(queryConversion).body();
         return JSON_RESPONSE_RATE_PARSER.extractFromJsonAsDouble(queryConversion, jsonResponse);
     }
 }

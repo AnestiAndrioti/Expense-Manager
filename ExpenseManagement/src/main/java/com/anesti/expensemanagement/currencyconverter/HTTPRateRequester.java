@@ -1,6 +1,7 @@
 package com.anesti.expensemanagement.currencyconverter;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -19,13 +20,13 @@ class HTTPRateRequester {
     }
 
     // @VisibleForTesting
-    HttpResponse<String> queryExchangeRate(String queryConversion) throws IOException, InterruptedException {
+    HttpResponse<InputStream> queryExchangeRate(String queryConversion) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .uri(URI.create(BASE_URL + ENDPOINT + "?q=" + queryConversion + "&compact=ultra&apiKey=" + ACCESS_KEY))
                 .build();
 
-        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());
     }
 }
