@@ -1,28 +1,30 @@
 package com.anesti.expensemanagement;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * Created by Anesti Andrioti on 22/03/2020.
  */
 public class Expense {
-
     private final String name;
-    private final Money amount;
+    private final Money money;
     private final LocalDateTime dateTime;
     private final String type;
     private final String subType;
     private final String description;
     private final String country;
+    private Optional<Money> convertedMoney;
 
-    private Expense(String name, Money amount, LocalDateTime dateTime, String type, String subType, String description, String country) {
+    private Expense(String name, Money money, LocalDateTime dateTime, String type, String subType, String description, String country) {
         this.name = name;
-        this.amount = amount;
+        this.money = money;
         this.dateTime = dateTime;
         this.type = type;
         this.subType = subType;
         this.description = description;
         this.country = country;
+        this.convertedMoney = Optional.empty();
     }
 
     public String getName() {
@@ -41,8 +43,8 @@ public class Expense {
         return subType;
     }
 
-    public Money getAmount() {
-        return amount;
+    public Money getMoney() {
+        return money;
     }
 
     public LocalDateTime getDateTime() {
@@ -51,6 +53,12 @@ public class Expense {
 
     public String getCountry() {
         return country;
+    }
+
+    public Optional<Money> getConvertedMoney() { return convertedMoney; }
+
+    public void setConvertedMoney(Money convertedMoney) {
+        this.convertedMoney = Optional.of(convertedMoney);
     }
 
     public static class ExpenseBuilder {

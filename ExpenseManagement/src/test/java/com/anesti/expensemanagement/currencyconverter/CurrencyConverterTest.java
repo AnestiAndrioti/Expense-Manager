@@ -3,26 +3,28 @@ package com.anesti.expensemanagement.currencyconverter;
 import com.anesti.expensemanagement.Currency;
 import com.anesti.expensemanagement.Money;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
-public class CurrencyConverterTest {
+class CurrencyConverterTest {
 
     @Test
-    public void convertToSameCurrencyYieldsSameAmount() throws IOException, InterruptedException {
-
+    void convertToSameCurrencyYieldsSameAmount() throws IOException, InterruptedException {
+        CurrencyConverter currencyConverter = new CurrencyConverter(Currency.LBP);
         Money originalMoney = new Money(Currency.LBP, 100000);
-        assertEquals(originalMoney, CurrencyConverter.convertMoney(originalMoney, Currency.LBP));
+        assertEquals(originalMoney, currencyConverter.convertMoney(originalMoney));
     }
 
     @Test
-    public void convertMoneyKeepsOriginal() throws IOException, InterruptedException {
-
+    void convertMoneyKeepsOriginal() throws IOException, InterruptedException {
+        CurrencyConverter currencyConverter = new CurrencyConverter(Currency.LBP);
         final double originalAmount = 10;
         Money originalMoney = new Money(Currency.USD, originalAmount);
-        Money resultMoney = CurrencyConverter.convertMoney(originalMoney, Currency.LBP);
+        Money resultMoney = currencyConverter.convertMoney(originalMoney);
 
         assertEquals(Currency.LBP, resultMoney.getCurrency());
         assertEquals(Currency.USD, originalMoney.getCurrency());
@@ -30,14 +32,20 @@ public class CurrencyConverterTest {
 
     }
 
-//    Wanted to test convertCurrency. But to do so
-//    without the randomness due to an unfixed exchange rate
-//    I have to mock the response of the httpRequest to give a fix rate
-//    However, as of 05/04/2020
-//    Mockito does not mock static methods...
-//    and PowerMock does not support Junit5...
-//    @Test
-//    public void convertCurrencies() {
-//    }
+    @Test
+    void canConvertCurrencies() throws IOException, InterruptedException {
+        Money oneDollar = new Money(Currency.USD, 1);
+        Money hundredDollars = new Money(Currency.USD, 100);
 
+        CurrencyConverter currencyConverterSpy = Mockito.spy(new CurrencyConverter(Currency.EUR));
+        Mockito.doReturn(0.92).when(currencyConverterSpy).getRateFactor(any());
+
+        var convertDollar = currencyConverterSpy.convertMoney(oneDollar);
+        var convertedHundredDollars = currencyConverterSpy.convertMoney(hundredDollars);
+
+        assertEquals(0.92, convertDollar.getAmount());
+        assertEquals(92, convertedHundredDollars.getAmount());
+        assertEquals(Currency.EUR, convertDollar.getCurrency());
+        assertEquals(Currency.EUR, convertedHundredDollars.getCurrency());
+    }
 }

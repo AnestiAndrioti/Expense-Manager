@@ -1,5 +1,8 @@
 package com.anesti.expensemanagement;
 
+import com.anesti.expensemanagement.currencyconverter.CurrencyConverter;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,15 +10,14 @@ import java.util.Objects;
 public class Account {
     private final long id;
     private final List<Expense> expenses;
+    private final Currency currency;
+    private final CurrencyConverter currencyConverter;
 
-    public Account(long id) {
+    public Account(long id, Currency currency) {
         this.id = id;
-        this.expenses = new ArrayList<Expense>();
-    }
-
-    public Account(long id, List<Expense> expenses) {
-        this.id = id;
-        this.expenses = new ArrayList<Expense>(expenses);
+        this.currency = currency;
+        this.currencyConverter = new CurrencyConverter(currency);
+        expenses = new ArrayList<>();
     }
 
     public long getId() {
@@ -26,7 +28,10 @@ public class Account {
         return expenses;
     }
 
-    public void addExpense(Expense expense) {
+    public void addExpense(Expense expense) throws IOException, InterruptedException {
+        if(!currency.equals(expense.getMoney().getCurrency())) {
+            expense.setConvertedMoney(currencyConverter.convertMoney(expense.getMoney()));
+        }
         expenses.add(expense);
     }
 
