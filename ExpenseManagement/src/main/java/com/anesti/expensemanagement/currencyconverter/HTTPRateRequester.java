@@ -6,17 +6,20 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class HTTPRateRequester {
+class HTTPRateRequester {
 
     private static final String ACCESS_KEY = "74997eb32f34f1741ea1";
     private static final String BASE_URL = "https://free.currconv.com/api/v7/";
     private static final String ENDPOINT = "convert";
 
+    private final HttpClient httpClient;
+
+    HTTPRateRequester() {
+        httpClient = HttpClient.newHttpClient();
+    }
+
     // @VisibleForTesting
     HttpResponse<String> queryExchangeRate(String queryConversion) throws IOException, InterruptedException {
-        HttpClient httpClient = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_2)
-                .build();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()

@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class JSONResponseParserTest {
+class JSONResponseParserTest {
 
     @Test
-    public void canExtractRateFromJson() throws JsonProcessingException {
+    void canExtractRateFromJson() throws JsonProcessingException {
         String json = "{\"USD_LBP\":1512.767904}";
-        JSONResponseParser jsonResponseParser = new JSONResponseParser();
+        JSONResponseRateParser jsonResponseParser = new JSONResponseRateParser();
 
         double rate = jsonResponseParser.extractFromJsonAsDouble("USD_LBP", json);
 
@@ -19,9 +19,9 @@ public class JSONResponseParserTest {
     }
 
     @Test
-    public void ThrowsExceptionIfKeyNotInJson() {
+    void ThrowsExceptionIfKeyNotInJson() {
         String json = "{\"USD_LBP\":1512.767904}";
-        JSONResponseParser jsonResponseParser = new JSONResponseParser();
+        JSONResponseRateParser jsonResponseParser = new JSONResponseRateParser();
 
         assertThrows(IllegalArgumentException.class, () -> jsonResponseParser.extractFromJsonAsDouble("USD_EUR", json));
     }
