@@ -1,22 +1,39 @@
 package com.anesti.expensemanagement.currencyconverter;
 
-import com.anesti.expensemanagement.Currency;
-import com.anesti.expensemanagement.Money;
-
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.anesti.expensemanagement.Currency;
+import com.anesti.expensemanagement.Money;
+
+
 public class CurrencyConverter {
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Static fields/initializers 
+    //~ ----------------------------------------------------------------------------------------------------------------
+
+    private static final JSONResponseRateParser JSON_RESPONSE_RATE_PARSER = new JSONResponseRateParser();
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Instance fields 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     private final Currency toCurrency;
     private final HTTPRateRequester httpRateRequester;
-    private final static JSONResponseRateParser JSON_RESPONSE_RATE_PARSER = new JSONResponseRateParser();
 
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Constructors 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     public CurrencyConverter(Currency toCurrency) {
         this.toCurrency = toCurrency;
         httpRateRequester = new HTTPRateRequester();
     }
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Methods 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     public Money convertMoney(Money originalMoney) throws IOException, InterruptedException {
         double factor = getRateFactor(originalMoney);

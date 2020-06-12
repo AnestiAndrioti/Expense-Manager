@@ -1,14 +1,19 @@
 package com.anesti.expensemanagement.currencyconverter;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
 
 class HTTPRateRequesterTest {
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Methods 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     @Test
     void canSendRequestForConversion() throws IOException, InterruptedException {

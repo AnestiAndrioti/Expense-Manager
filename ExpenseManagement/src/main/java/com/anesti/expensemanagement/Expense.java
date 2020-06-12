@@ -1,12 +1,19 @@
 package com.anesti.expensemanagement;
 
 import java.time.LocalDateTime;
+
 import java.util.Optional;
+
 
 /**
  * Created by Anesti Andrioti on 22/03/2020.
  */
 public class Expense {
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Instance fields 
+    //~ ----------------------------------------------------------------------------------------------------------------
+
     private final String name;
     private final Money money;
     private final LocalDateTime dateTime;
@@ -15,6 +22,10 @@ public class Expense {
     private final String description;
     private final String country;
     private Optional<Money> convertedMoney;
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Constructors 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     private Expense(String name, Money money, LocalDateTime dateTime, String type, String subType, String description, String country) {
         this.name = name;
@@ -26,6 +37,10 @@ public class Expense {
         this.country = country;
         this.convertedMoney = Optional.empty();
     }
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Methods 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     public String getName() {
         return name;
@@ -55,11 +70,17 @@ public class Expense {
         return country;
     }
 
-    public Optional<Money> getConvertedMoney() { return convertedMoney; }
+    public Optional<Money> getConvertedMoney() {
+        return convertedMoney;
+    }
 
     public void setConvertedMoney(Money convertedMoney) {
         this.convertedMoney = Optional.of(convertedMoney);
     }
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Nested Classes 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     public static class ExpenseBuilder {
 

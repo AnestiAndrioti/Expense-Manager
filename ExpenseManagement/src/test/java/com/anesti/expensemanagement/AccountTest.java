@@ -70,16 +70,10 @@ class AccountTest {
     }
 
     private Expense getExpenseWithName(List<Expense> expenses, String name) {
-        var expenseWithName = expenses
+        return expenses
                 .stream()
                 .filter(expense -> name.equals(expense.getName()))
-                .findFirst();
-
-        if(expenseWithName.isPresent()) {
-            return expenseWithName.get();
-        }
-        else {
-            throw new IllegalArgumentException("Expense with name not found in List.");
-        }
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

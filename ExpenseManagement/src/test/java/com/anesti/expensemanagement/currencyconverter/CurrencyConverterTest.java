@@ -1,16 +1,22 @@
 package com.anesti.expensemanagement.currencyconverter;
 
-import com.anesti.expensemanagement.Currency;
-import com.anesti.expensemanagement.Money;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import java.io.IOException;
 
+import com.anesti.expensemanagement.Currency;
+import com.anesti.expensemanagement.Money;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
 import static org.mockito.ArgumentMatchers.any;
+import org.mockito.Mockito;
+
 
 class CurrencyConverterTest {
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Methods 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     @Test
     void convertToSameCurrencyYieldsSameAmount() throws IOException, InterruptedException {
