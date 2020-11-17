@@ -1,11 +1,12 @@
 package com.anesti.expensemanagement;
 
-import com.anesti.expensemanagement.currencyconverter.CurrencyConverter;
-
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.anesti.expensemanagement.currencyconverter.CurrencyConverter;
 
 
 public class Account {

@@ -1,26 +1,40 @@
 package com.anesti.expensemanagement.statistics;
 
-import com.anesti.expensemanagement.Account;
-import com.anesti.expensemanagement.Expense;
-import com.anesti.expensemanagement.util.ExpenseUtils;
-
 import java.time.LocalDateTime;
 import java.time.Month;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.anesti.expensemanagement.Account;
+import com.anesti.expensemanagement.Expense;
+import com.anesti.expensemanagement.util.ExpenseUtils;
+
+
 public class Snapshot {
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Instance fields 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     private final List<Expense> expenses;
     private final LocalDateTime creationDateTime;
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Constructors 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     public Snapshot(Account account) {
         this.expenses = account.getExpenses();
         creationDateTime = LocalDateTime.now();
     }
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Methods 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     public double computeSumOfExpensesOfMonth(int year, Month month) {
         return expenses.stream()
