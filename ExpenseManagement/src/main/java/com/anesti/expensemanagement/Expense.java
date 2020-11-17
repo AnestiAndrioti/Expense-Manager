@@ -17,8 +17,8 @@ public class Expense {
     private final String name;
     private final Money money;
     private final LocalDateTime dateTime;
-    private final String type;
-    private final String subType;
+    private final String category;
+    private final String subCategory;
     private final String description;
     private final String country;
     private Optional<Money> convertedMoney;
@@ -27,12 +27,12 @@ public class Expense {
     //~ Constructors 
     //~ ----------------------------------------------------------------------------------------------------------------
 
-    private Expense(String name, Money money, LocalDateTime dateTime, String type, String subType, String description, String country) {
+    private Expense(String name, Money money, LocalDateTime dateTime, String category, String subCategory, String description, String country) {
         this.name = name;
         this.money = money;
         this.dateTime = dateTime;
-        this.type = type;
-        this.subType = subType;
+        this.category = category;
+        this.subCategory = subCategory;
         this.description = description;
         this.country = country;
         this.convertedMoney = Optional.empty();
@@ -50,12 +50,12 @@ public class Expense {
         return description;
     }
 
-    public String getType() {
-        return type;
+    public String getCategory() {
+        return category;
     }
 
-    public String getSubType() {
-        return subType;
+    public String getSubCategory() {
+        return subCategory;
     }
 
     public Money getMoney() {
@@ -78,6 +78,20 @@ public class Expense {
         this.convertedMoney = Optional.of(convertedMoney);
     }
 
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "name='" + name + '\'' +
+                ", money=" + money +
+                ", dateTime=" + dateTime +
+                ", category='" + category + '\'' +
+                ", subCategory='" + subCategory + '\'' +
+                ", description='" + description + '\'' +
+                ", country='" + country + '\'' +
+                ", convertedMoney=" + convertedMoney +
+                '}';
+    }
+
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Nested Classes 
     //~ ----------------------------------------------------------------------------------------------------------------
@@ -87,8 +101,8 @@ public class Expense {
         private final String name;
         private final Money amount;
         private final LocalDateTime dateTime;
-        private String type;
-        private String subType;
+        private String category;
+        private String subCategory;
         private String description;
         private String country;
 
@@ -98,8 +112,15 @@ public class Expense {
             this.dateTime = LocalDateTime.now();
         }
 
+        // Mainly used for testing
+        public ExpenseBuilder(String name, Money amount, LocalDateTime localDateTime) {
+            this.name = name;
+            this.amount = amount;
+            this.dateTime = localDateTime;
+        }
+
         public ExpenseBuilder withType(String type) {
-            this.type = type;
+            this.category = type;
             return this;
         }
 
@@ -109,7 +130,7 @@ public class Expense {
         }
 
         public ExpenseBuilder withSubType(String subType) {
-            this.subType = subType;
+            this.subCategory = subType;
             return this;
         }
 
@@ -119,7 +140,7 @@ public class Expense {
         }
 
         public Expense build() {
-            return new Expense(name, amount, dateTime, type, subType, description, country);
+            return new Expense(name, amount, dateTime, category, subCategory, description, country);
         }
     }
 }

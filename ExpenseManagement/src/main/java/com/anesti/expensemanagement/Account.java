@@ -1,12 +1,11 @@
 package com.anesti.expensemanagement;
 
-import java.io.IOException;
+import com.anesti.expensemanagement.currencyconverter.CurrencyConverter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import com.anesti.expensemanagement.currencyconverter.CurrencyConverter;
 
 
 public class Account {
@@ -28,6 +27,13 @@ public class Account {
         this.id = id;
         this.currency = currency;
         this.currencyConverter = new CurrencyConverter(currency);
+        expenses = new ArrayList<>();
+    }
+
+    public Account(long id, CurrencyConverter currencyConverter) {
+        this.id = id;
+        this.currencyConverter = currencyConverter;
+        this.currency = currencyConverter.getToCurrency();
         expenses = new ArrayList<>();
     }
 
