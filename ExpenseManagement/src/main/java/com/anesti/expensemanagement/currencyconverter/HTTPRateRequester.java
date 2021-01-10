@@ -39,9 +39,8 @@ class HTTPRateRequester {
 
     // @VisibleForTesting
     HttpResponse<InputStream> queryExchangeRate(String queryConversion) throws IOException, InterruptedException {
-
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(BASE_URL + ENDPOINT + "?q=" + queryConversion + "&compact=ultra&apiKey=" + ACCESS_KEY)).build();
-
+        final var conversionURI = URI.create(BASE_URL + ENDPOINT + "?q=" + queryConversion + "&compact=ultra&apiKey=" + ACCESS_KEY);
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(conversionURI).build();
         return httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());
     }
 }

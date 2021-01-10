@@ -12,15 +12,8 @@ class AccountTest {
 
     @Test
     void canAddExpenseOfSameCurrency() throws IOException, InterruptedException {
-        var spotifyExpense = new Expense.ExpenseBuilder("Spotify", new Money(Currency.USD, 5.0))
-                .build();
-
-        var zwiftExpense = new Expense.ExpenseBuilder("Zwift", new Money(Currency.USD, 15.0))
-                .withCountry("USA")
-                .withDescription("Monthly Subscription Rate to Zwift")
-                .withType("Sports")
-                .withSubType("Indoor Biking")
-                .build();
+        var spotifyExpense = new Expense("Spotify", new Money(Currency.USD, 5.0), "Music", "Lebanon");
+        var zwiftExpense = new Expense("Zwift", new Money(Currency.USD, 15.0), "Sport", "USA");
 
         Account account = new Account(1, Currency.USD);
         account.addExpense(zwiftExpense);
@@ -40,11 +33,8 @@ class AccountTest {
 
     @Test
     void canAddExpenseOfDifferentCurrencies() throws IOException, InterruptedException {
-        var spotifyExpense = new Expense.ExpenseBuilder("Spotify", new Money(Currency.USD, 5.0))
-                .build();
-
-        var tvExpense = new Expense.ExpenseBuilder("tv", new Money(Currency.EUR, 15.0))
-                .build();
+        var spotifyExpense = new Expense("Spotify", new Money(Currency.USD, 5.0), "Music", "Lebanon");
+        var tvExpense = new Expense("tv", new Money(Currency.EUR, 15.0), "Entertainment", "Greece");
 
         assertTrue(tvExpense.getConvertedMoney().isEmpty());
 
