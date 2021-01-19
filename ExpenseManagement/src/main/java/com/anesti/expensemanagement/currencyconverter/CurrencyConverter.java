@@ -1,10 +1,10 @@
 package com.anesti.expensemanagement.currencyconverter;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import com.anesti.expensemanagement.Currency;
 import com.anesti.expensemanagement.Money;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class CurrencyConverter {
@@ -14,41 +14,22 @@ public class CurrencyConverter {
     //~ ----------------------------------------------------------------------------------------------------------------
 
     private static final JSONResponseRateParser JSON_RESPONSE_RATE_PARSER = new JSONResponseRateParser();
-
-    //~ ----------------------------------------------------------------------------------------------------------------
-    //~ Instance fields 
-    //~ ----------------------------------------------------------------------------------------------------------------
-
-    private final Currency toCurrency;
-    private final HTTPRateRequester httpRateRequester;
-
-    //~ ----------------------------------------------------------------------------------------------------------------
-    //~ Constructors 
-    //~ ----------------------------------------------------------------------------------------------------------------
-
-    public CurrencyConverter(Currency toCurrency) {
-        this.toCurrency = toCurrency;
-        httpRateRequester = new HTTPRateRequester();
-    }
+    private static final HTTPRateRequester HTTP_RATE_REQUESTER = new HTTPRateRequester();
 
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Methods 
     //~ ----------------------------------------------------------------------------------------------------------------
 
-    public Currency getToCurrency() {
-        return toCurrency;
-    }
-
-    public Money convertMoney(Money originalMoney) throws IOException, InterruptedException {
-        double factor = getRateFactor(originalMoney);
+    public static Money convertMoney(Money originalMoney, Currency toCurrency) throws IOException, InterruptedException {
+        double factor = getRateFactor(originalMoney.getCurrency(), toCurrency);
         return new Money(toCurrency, originalMoney.getAmount() * factor);
     }
 
     // @VisibleForTesting
-    double getRateFactor(Money originalMoney) throws IOException, InterruptedException {
-        String queryConversion = originalMoney.getCurrency().toString() + "_" + toCurrency.toString();
+    public static double getRateFactor(Currency fromCurrency, Currency toCurrency) throws IOException, InterruptedException {
+        String queryConversion = fromCurrency.getCode() + "_" + toCurrency.getCode();
 
-        InputStream jsonResponse = httpRateRequester.queryExchangeRate(queryConversion).body();
+        InputStream jsonResponse = HTTP_RATE_REQUESTER.queryExchangeRate(queryConversion).body();
         return JSON_RESPONSE_RATE_PARSER.extractFromJsonAsDouble(queryConversion, jsonResponse);
     }
 }

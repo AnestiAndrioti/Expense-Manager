@@ -24,6 +24,10 @@ public class Money {
         this.currency = currency;
     }
 
+    public Money(Money money) {
+        this(money.currency, money.getAmount());
+    }
+
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Methods 
     //~ ----------------------------------------------------------------------------------------------------------------
@@ -53,7 +57,7 @@ public class Money {
 
     @Override
     public String toString() {
-        return "Money: " + this.amount + " " + this.getCurrency().toString();
+        return "Money: " + this.amount + " " + this.getCurrency().getCode();
     }
 
     private double checkAmount(double amount) {

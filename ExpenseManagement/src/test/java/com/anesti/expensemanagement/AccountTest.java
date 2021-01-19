@@ -16,8 +16,9 @@ class AccountTest {
         var zwiftExpense = new Expense("Zwift", new Money(Currency.USD, 15.0), "Sport", "USA");
 
         Account account = new Account(1, Currency.USD);
-        account.addExpense(zwiftExpense);
-        account.addExpense(spotifyExpense);
+
+        ExpenseManager.addExpenseToAccount(account, zwiftExpense);
+        ExpenseManager.addExpenseToAccount(account, spotifyExpense);
 
         var accountExpenses = account.getExpenses();
         assertEquals(2, accountExpenses.size());
@@ -39,8 +40,9 @@ class AccountTest {
         assertTrue(tvExpense.getConvertedMoney().isEmpty());
 
         Account account = new Account(1, Currency.USD);
-        account.addExpense(tvExpense);
-        account.addExpense(spotifyExpense);
+
+        ExpenseManager.addExpenseToAccount(account, tvExpense);
+        ExpenseManager.addExpenseToAccount(account, spotifyExpense);
 
         assertTrue(tvExpense.getConvertedMoney().isPresent());
 
@@ -51,8 +53,9 @@ class AccountTest {
         assertTrue(accountExpenses.contains(tvExpense));
 
         var tvExpenseFromAccount = getExpenseWithName(accountExpenses, "tv");
-        assertEquals(Currency.EUR, tvExpense.getMoney().getCurrency());
-        assertEquals(Currency.USD, tvExpense.getConvertedMoney().get().getCurrency());
+        assertEquals(Currency.EUR, tvExpenseFromAccount.getMoney().getCurrency());
+        assertTrue(tvExpenseFromAccount.getConvertedMoney().isPresent());
+        assertEquals(Currency.USD, tvExpenseFromAccount.getConvertedMoney().get().getCurrency());
 
         var spotifyExpenseFromAccount = getExpenseWithName(accountExpenses, "Spotify");
         assertEquals(Currency.USD, spotifyExpenseFromAccount.getMoney().getCurrency());

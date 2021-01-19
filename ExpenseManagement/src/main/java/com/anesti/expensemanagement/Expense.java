@@ -27,7 +27,7 @@ public class Expense {
 
     public Expense(String name, Money money, String category, String country) {
         this.name = name;
-        this.money = money;
+        this.money = new Money(money);
         this.category = category;
         this.country = country;
         this.dateTime = LocalDateTime.now();

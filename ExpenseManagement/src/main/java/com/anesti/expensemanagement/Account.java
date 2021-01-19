@@ -1,12 +1,9 @@
 package com.anesti.expensemanagement;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import com.anesti.expensemanagement.currencyconverter.CurrencyConverter;
 
 
 public class Account {
@@ -16,9 +13,8 @@ public class Account {
     //~ ----------------------------------------------------------------------------------------------------------------
 
     private final long id;
-    private final List<Expense> expenses;
+    private final List<Expense> expenses = Collections.synchronizedList(new ArrayList<>());
     private final Currency currency;
-    private final CurrencyConverter currencyConverter;
 
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Constructors 
@@ -27,15 +23,6 @@ public class Account {
     public Account(long id, Currency currency) {
         this.id = id;
         this.currency = currency;
-        this.currencyConverter = new CurrencyConverter(currency);
-        expenses = new ArrayList<>();
-    }
-
-    public Account(long id, CurrencyConverter currencyConverter) {
-        this.id = id;
-        this.currencyConverter = currencyConverter;
-        this.currency = currencyConverter.getToCurrency();
-        expenses = new ArrayList<>();
     }
 
     //~ ----------------------------------------------------------------------------------------------------------------
@@ -46,14 +33,15 @@ public class Account {
         return id;
     }
 
-    public List<Expense> getExpenses() {
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public synchronized List<Expense> getExpenses() {
         return expenses;
     }
 
-    public void addExpense(Expense expense) throws IOException, InterruptedException {
-        if (!currency.equals(expense.getMoney().getCurrency())) {
-            expense.setConvertedMoney(currencyConverter.convertMoney(expense.getMoney()));
-        }
+    synchronized void addExpense(Expense expense) {
         expenses.add(expense);
     }
 
