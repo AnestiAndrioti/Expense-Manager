@@ -39,10 +39,10 @@ class StatisticsComputerTest {
     static void setup() throws IOException, InterruptedException {
 
         for (int i = 1; i <= 3; ++i) {
-            var expenseSport = new Expense("expense-USD-sport-" + i, new Money(Currency.USD, 5.0), refDateTime, SPORT, LEBANON);
-            var expenseMedical = new Expense("expense-EUR-medical-" + i, new Money(Currency.USD, 5.0 + 1), refDateTime, MEDICAL, LEBANON);
-            var expenseTaxes = new Expense("expense-USD-taxes-" + i, new Money(Currency.USD, 5.0 + 2), refDateTime, TAXES, LEBANON);
-            var expenseLeisure = new Expense("expense-EUR-leisure-" + i, new Money(Currency.USD, 5.0 + i), refDateTime, LEISURE, LEBANON);
+            var expenseSport = new Expense(i * 10, "expense-USD-sport-" + i, new Money(Currency.USD, 5.0), refDateTime, SPORT, LEBANON);
+            var expenseMedical = new Expense(i * 10 + 1, "expense-EUR-medical-" + i, new Money(Currency.USD, 5.0 + 1), refDateTime, MEDICAL, LEBANON);
+            var expenseTaxes = new Expense(i * 10 + 2, "expense-USD-taxes-" + i, new Money(Currency.USD, 5.0 + 2), refDateTime, TAXES, LEBANON);
+            var expenseLeisure = new Expense(i * 10 + 3, "expense-EUR-leisure-" + i, new Money(Currency.USD, 5.0 + i), refDateTime, LEISURE, LEBANON);
 
             ExpenseManager.addExpenseToAccount(account, expenseSport);
             ExpenseManager.addExpenseToAccount(account, expenseMedical);
@@ -83,8 +83,8 @@ class StatisticsComputerTest {
     void getPriceWithAccountCurrency() throws IOException, InterruptedException {
         Account accountInUSD = new Account(1, Currency.USD);
 
-        var expenseUSD = new Expense("expense-USD", new Money(Currency.USD, 5.0), refDateTime, SPORT, LEBANON);
-        var expenseEUR = new Expense("expense-EUR", new Money(Currency.EUR, 5.0), refDateTime, MEDICAL, LEBANON);
+        var expenseUSD = new Expense(1, "expense-USD", new Money(Currency.USD, 5.0), refDateTime, SPORT, LEBANON);
+        var expenseEUR = new Expense(2, "expense-EUR", new Money(Currency.EUR, 5.0), refDateTime, MEDICAL, LEBANON);
 
         assertEquals(expenseUSD.getMoney(), StatisticsComputer.getMoneyWithAccountCurrency(expenseUSD));
 
@@ -111,9 +111,9 @@ class StatisticsComputerTest {
         LocalDateTime feb_01_2021 = LocalDateTime.of(2021, 2, 1, 8, 0);
         LocalDateTime jan_31_2022 = LocalDateTime.of(2022, 1, 31, 8, 0);
 
-        var expenseMedical = new Expense("expense-Jan-31-2021", money, jan_31_2021, MEDICAL, LEBANON);
-        var expenseTaxes = new Expense("expense-Feb-01-2021", money, feb_01_2021, TAXES, LEBANON);
-        var expenseLeisure = new Expense("expense-Jan-31-2021", money, jan_31_2022, LEISURE, LEBANON);
+        var expenseMedical = new Expense(1, "expense-Jan-31-2021", money, jan_31_2021, MEDICAL, LEBANON);
+        var expenseTaxes = new Expense(2, "expense-Feb-01-2021", money, feb_01_2021, TAXES, LEBANON);
+        var expenseLeisure = new Expense(3, "expense-Jan-31-2021", money, jan_31_2022, LEISURE, LEBANON);
 
         assertTrue(StatisticsComputer.expenseIsOnSameMonthOfSameYear(expenseMedical, ref_time_jan_01_2021.getYear(), ref_time_jan_01_2021.getMonth()));
 

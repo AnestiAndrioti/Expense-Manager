@@ -1,11 +1,10 @@
 package com.anesti.expensemanagement;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
 
-/**
- * Created by Anesti Andrioti on 22/03/2020.
- */
+@Embeddable
 public class Money {
 
     //~ ----------------------------------------------------------------------------------------------------------------

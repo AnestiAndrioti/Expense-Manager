@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ExpenseManager {
 
-        public static void addExpenseToAccount(Account account, Expense expense) throws IOException, InterruptedException {
+    public static void addExpenseToAccount(Account account, Expense expense) throws IOException, InterruptedException {
         if (!account.getCurrency().equals(expense.getMoney().getCurrency())) {
             expense.setConvertedMoney(CurrencyConverter.convertMoney(expense.getMoney(), account.getCurrency()));
         }

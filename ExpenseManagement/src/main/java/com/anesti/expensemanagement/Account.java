@@ -1,24 +1,44 @@
 package com.anesti.expensemanagement;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-
+@Entity
 public class Account {
 
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Instance fields 
     //~ ----------------------------------------------------------------------------------------------------------------
 
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Expense> expenses = Collections.synchronizedList(new ArrayList<>());
-    private final Currency currency;
+
+    private Currency currency;
 
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Constructors 
     //~ ----------------------------------------------------------------------------------------------------------------
+
+
+    // Mainly used for Spring
+    protected Account() {
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
 
     public Account(long id, Currency currency) {
         this.id = id;
@@ -43,6 +63,12 @@ public class Account {
 
     synchronized void addExpense(Expense expense) {
         expenses.add(expense);
+        expense.setAccount(this);
+    }
+
+    synchronized void deleteExpense(Expense expense) {
+        expenses.remove(expense);
+        expense.deleteAccount();
     }
 
     @Override
