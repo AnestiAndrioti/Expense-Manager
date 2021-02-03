@@ -1,15 +1,17 @@
 package com.anesti.expensemanagement;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+
 
 @Entity
 public class Account {
@@ -31,23 +33,22 @@ public class Account {
     //~ Constructors 
     //~ ----------------------------------------------------------------------------------------------------------------
 
-
-    // Mainly used for Spring
-    protected Account() {
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
     public Account(long id, Currency currency) {
         this.id = id;
         this.currency = currency;
     }
 
+    // Used for Spring
+    protected Account() {
+    }
+
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Methods 
     //~ ----------------------------------------------------------------------------------------------------------------
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
 
     public long getId() {
         return id;
@@ -59,16 +60,6 @@ public class Account {
 
     public synchronized List<Expense> getExpenses() {
         return expenses;
-    }
-
-    synchronized void addExpense(Expense expense) {
-        expenses.add(expense);
-        expense.setAccount(this);
-    }
-
-    synchronized void deleteExpense(Expense expense) {
-        expenses.remove(expense);
-        expense.deleteAccount();
     }
 
     @Override
@@ -84,5 +75,15 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    synchronized void addExpense(Expense expense) {
+        expenses.add(expense);
+        expense.setAccount(this);
+    }
+
+    synchronized void deleteExpense(Expense expense) {
+        expenses.remove(expense);
+        expense.deleteAccount();
     }
 }

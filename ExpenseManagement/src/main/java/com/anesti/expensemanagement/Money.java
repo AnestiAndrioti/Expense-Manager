@@ -1,7 +1,8 @@
 package com.anesti.expensemanagement;
 
-import javax.persistence.Embeddable;
 import java.util.Objects;
+
+import javax.persistence.Embeddable;
 
 
 @Embeddable
@@ -18,13 +19,13 @@ public class Money {
     //~ Constructors 
     //~ ----------------------------------------------------------------------------------------------------------------
 
+    public Money(Money money) {
+        this(money.currency, money.getAmount());
+    }
+
     public Money(Currency currency, double amount) {
         this.amount = checkAmount(amount);
         this.currency = currency;
-    }
-
-    public Money(Money money) {
-        this(money.currency, money.getAmount());
     }
 
     //~ ----------------------------------------------------------------------------------------------------------------

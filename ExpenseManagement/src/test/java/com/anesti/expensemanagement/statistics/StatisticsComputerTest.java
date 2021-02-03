@@ -1,22 +1,29 @@
 package com.anesti.expensemanagement.statistics;
 
+import java.io.IOException;
+
+import java.time.LocalDateTime;
+
+import java.util.List;
+
 import com.anesti.expensemanagement.Account;
 import com.anesti.expensemanagement.Currency;
 import com.anesti.expensemanagement.Expense;
 import com.anesti.expensemanagement.ExpenseManager;
 import com.anesti.expensemanagement.Money;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 
 class StatisticsComputerTest {
+
+    //~ ----------------------------------------------------------------------------------------------------------------
+    //~ Static fields/initializers 
+    //~ ----------------------------------------------------------------------------------------------------------------
 
     private static final String SPORT = "Sport";
     private static final String MEDICAL = "Medical";
@@ -24,15 +31,11 @@ class StatisticsComputerTest {
     private static final String LEISURE = "Leisure";
     private static final String LEBANON = "Lebanon";
 
-    //~ ----------------------------------------------------------------------------------------------------------------
-    //~ Static fields/initializers
-    //~ ----------------------------------------------------------------------------------------------------------------
-
     private static Account account = new Account(1, Currency.USD);
     private static LocalDateTime refDateTime = LocalDateTime.of(2020, 11, 17, 8, 0);
 
     //~ ----------------------------------------------------------------------------------------------------------------
-    //~ Methods
+    //~ Methods 
     //~ ----------------------------------------------------------------------------------------------------------------
 
     @BeforeAll
@@ -40,9 +43,9 @@ class StatisticsComputerTest {
 
         for (int i = 1; i <= 3; ++i) {
             var expenseSport = new Expense(i * 10, "expense-USD-sport-" + i, new Money(Currency.USD, 5.0), refDateTime, SPORT, LEBANON);
-            var expenseMedical = new Expense(i * 10 + 1, "expense-EUR-medical-" + i, new Money(Currency.USD, 5.0 + 1), refDateTime, MEDICAL, LEBANON);
-            var expenseTaxes = new Expense(i * 10 + 2, "expense-USD-taxes-" + i, new Money(Currency.USD, 5.0 + 2), refDateTime, TAXES, LEBANON);
-            var expenseLeisure = new Expense(i * 10 + 3, "expense-EUR-leisure-" + i, new Money(Currency.USD, 5.0 + i), refDateTime, LEISURE, LEBANON);
+            var expenseMedical = new Expense((i * 10) + 1, "expense-EUR-medical-" + i, new Money(Currency.USD, 5.0 + 1), refDateTime, MEDICAL, LEBANON);
+            var expenseTaxes = new Expense((i * 10) + 2, "expense-USD-taxes-" + i, new Money(Currency.USD, 5.0 + 2), refDateTime, TAXES, LEBANON);
+            var expenseLeisure = new Expense((i * 10) + 3, "expense-EUR-leisure-" + i, new Money(Currency.USD, 5.0 + i), refDateTime, LEISURE, LEBANON);
 
             ExpenseManager.addExpenseToAccount(account, expenseSport);
             ExpenseManager.addExpenseToAccount(account, expenseMedical);
@@ -131,8 +134,7 @@ class StatisticsComputerTest {
         Expense previousExpense = expenseIterator.next();
         while (expenseIterator.hasNext()) {
             Expense currentExpense = expenseIterator.next();
-            if (StatisticsComputer.getMoneyWithAccountCurrency(previousExpense).getAmount() <
-                    StatisticsComputer.getMoneyWithAccountCurrency(currentExpense).getAmount()) {
+            if (StatisticsComputer.getMoneyWithAccountCurrency(previousExpense).getAmount() < StatisticsComputer.getMoneyWithAccountCurrency(currentExpense).getAmount()) {
                 return false;
             }
             previousExpense = currentExpense;

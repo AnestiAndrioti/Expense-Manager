@@ -1,5 +1,10 @@
 package com.anesti.expensemanagement;
 
+import java.time.LocalDateTime;
+
+import java.util.Objects;
+import java.util.Optional;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -10,9 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Optional;
+
 
 @Entity
 public class Expense {
@@ -27,10 +30,12 @@ public class Expense {
     private final String name;
 
     @Embedded
-    @AttributeOverrides({
+    @AttributeOverrides(
+        {
             @AttributeOverride(name = "currency", column = @Column(name = "original_currency")),
             @AttributeOverride(name = "amount", column = @Column(name = "original_amount"))
-    })
+        }
+    )
     private final Money money;
 
     private final LocalDateTime dateTime;
@@ -42,10 +47,12 @@ public class Expense {
 
     @Column(nullable = true)
     @Embedded
-    @AttributeOverrides({
+    @AttributeOverrides(
+        {
             @AttributeOverride(name = "currency", column = @Column(name = "converted_currency")),
             @AttributeOverride(name = "amount", column = @Column(name = "converted_amount"))
-    })
+        }
+    )
     private Money convertedMoney = null;
 
     //~ ----------------------------------------------------------------------------------------------------------------
@@ -121,17 +128,13 @@ public class Expense {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if ((o == null) || (getClass() != o.getClass()))
+            return false;
         Expense expense = (Expense) o;
-        return id == expense.id &&
-                Objects.equals(name, expense.name) &&
-                Objects.equals(money, expense.money) &&
-                Objects.equals(dateTime, expense.dateTime) &&
-                Objects.equals(category, expense.category) &&
-                Objects.equals(country, expense.country) &&
-                Objects.equals(account, expense.account) &&
-                Objects.equals(convertedMoney, expense.convertedMoney);
+        return (id == expense.id) && Objects.equals(name, expense.name) && Objects.equals(money, expense.money) && Objects.equals(dateTime, expense.dateTime) && Objects.equals(category, expense.category) &&
+            Objects.equals(country, expense.country) && Objects.equals(account, expense.account) && Objects.equals(convertedMoney, expense.convertedMoney);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package com.anesti.expensemanagement.currencyconverter;
 
-import com.anesti.expensemanagement.Currency;
-import com.anesti.expensemanagement.Money;
-
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.anesti.expensemanagement.Currency;
+import com.anesti.expensemanagement.Money;
 
 
 public class CurrencyConverter {
