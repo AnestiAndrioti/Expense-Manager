@@ -20,6 +20,10 @@ public class ExpenseManager {
         account.addExpense(expense);
     }
 
+    public static void deleteExpenseFromAccount(Account account, Expense expense) {
+        account.deleteExpense(expense);
+    }
+
     public static List<Expense> getExpensesFromAccount(Account account) {
         return account.getExpenses();
     }

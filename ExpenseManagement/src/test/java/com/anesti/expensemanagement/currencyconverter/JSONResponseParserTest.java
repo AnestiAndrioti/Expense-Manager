@@ -10,10 +10,6 @@ import org.junit.jupiter.api.Test;
 
 class JSONResponseParserTest {
 
-    //~ ----------------------------------------------------------------------------------------------------------------
-    //~ Methods 
-    //~ ----------------------------------------------------------------------------------------------------------------
-
     @Test
     void canExtractRateFromJson() throws IOException {
         String json = "{\"USD_LBP\":1512.767904}";

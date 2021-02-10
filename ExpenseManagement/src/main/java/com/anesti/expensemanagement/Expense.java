@@ -16,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Expense {
@@ -26,8 +28,8 @@ public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private final long id;
-    private final String name;
+    private long id;
+    private String name;
 
     @Embedded
     @AttributeOverrides(
@@ -36,13 +38,14 @@ public class Expense {
             @AttributeOverride(name = "amount", column = @Column(name = "original_amount"))
         }
     )
-    private final Money money;
+    private Money money;
 
-    private final LocalDateTime dateTime;
-    private final String category;
-    private final String country;
+    private LocalDateTime dateTime;
+    private String category;
+    private String country;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Account account;
 
     @Column(nullable = true)
@@ -76,6 +79,10 @@ public class Expense {
         this.category = category;
         this.country = country;
         this.dateTime = dateTime;
+    }
+
+    // for Spring
+    protected Expense() {
     }
 
     //~ ----------------------------------------------------------------------------------------------------------------

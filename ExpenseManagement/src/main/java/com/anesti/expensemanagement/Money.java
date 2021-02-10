@@ -8,16 +8,8 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Money {
 
-    //~ ----------------------------------------------------------------------------------------------------------------
-    //~ Instance fields 
-    //~ ----------------------------------------------------------------------------------------------------------------
-
-    private final Currency currency;
-    private final double amount;
-
-    //~ ----------------------------------------------------------------------------------------------------------------
-    //~ Constructors 
-    //~ ----------------------------------------------------------------------------------------------------------------
+    private Currency currency;
+    private double amount;
 
     public Money(Money money) {
         this(money.currency, money.getAmount());
@@ -28,9 +20,17 @@ public class Money {
         this.currency = currency;
     }
 
-    //~ ----------------------------------------------------------------------------------------------------------------
-    //~ Methods 
-    //~ ----------------------------------------------------------------------------------------------------------------
+    // For Spring
+    protected Money() {
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
     public Currency getCurrency() {
         return currency;

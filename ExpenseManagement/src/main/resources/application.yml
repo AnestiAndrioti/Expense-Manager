@@ -1,0 +1,6 @@
+# Showing error messages may leak information about your server implementation.
+# But since this project is for educational purposes I will turn it on
+server:
+  error:
+    include-message: always
+    include-binding-errors: always

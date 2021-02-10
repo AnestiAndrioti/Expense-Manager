@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import com.anesti.expensemanagement.Account;
 
+import com.anesti.expensemanagement.restapi.exceptions.ResourceNotFoundException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,21 +37,22 @@ public class AccountService {
         return accounts;
     }
 
-    public Optional<Account> getAccount(Long accountId) {
-        return accountRepository.findById(accountId);
-    }
-
-    public void addAccount(Account account) {
-        Optional<Account> optionalAccount = getAccount(account.getId());
-        if (optionalAccount.isEmpty()) {
-            accountRepository.save(account);
+    public Account getAccountFromRepository(long accountId) {
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+        if (optionalAccount.isPresent()) {
+            return optionalAccount.get();
         } else {
-            logger.warn("Attempting to create account with ID {}. This ID is already used by another account. " +
-                "Account creation aborted.", account.getId());
+            logger.warn("An Attempt to fetch an account with ID {} was made. This account does not exist.", accountId);
+            throw new ResourceNotFoundException("Account with id " + accountId + " was not found.");
         }
     }
 
-    public void deleteAccount(Long accountId) {
-        accountRepository.deleteById(accountId);
+    public Account addAccount(Account account) { 
+        return accountRepository.save(account);
+    }
+
+    public void deleteAccount(long accountId) {
+        Account account = getAccountFromRepository(accountId);
+        accountRepository.delete(account);
     }
 }
