@@ -36,16 +36,16 @@ public class ExpenseService {
     }
 
     public Expense addExpenseToAccount(long accountId, Expense expense) throws IOException, InterruptedException {
-        Account account = accountService.getAccountFromRepository(accountId);
-        ExpenseManager.addExpenseToAccount(account, expense);
+        Account accountFromRepository = accountService.getAccountFromRepository(accountId);
+        ExpenseManager.addExpenseToAccount(accountFromRepository, expense);
         return expenseRepository.save(expense);
     }
 
     public void deleteExpenseFromAccount(long accountId, long expenseId) {
-        Account account = accountService.getAccountFromRepository(accountId);
+        Account accountFromRepository = accountService.getAccountFromRepository(accountId);
         Expense expense = getExpenseFromAccount(accountId, expenseId);
 
-        ExpenseManager.deleteExpenseFromAccount(account, expense);
+        ExpenseManager.deleteExpenseFromAccount(accountFromRepository, expense);
         expenseRepository.delete(expense);
     }
 }

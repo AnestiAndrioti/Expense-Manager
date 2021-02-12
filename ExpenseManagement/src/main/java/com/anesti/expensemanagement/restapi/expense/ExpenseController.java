@@ -60,7 +60,11 @@ public class ExpenseController {
 
         Expense savedExpense = expenseService.addExpenseToAccount(accountId, expense);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedExpense.getId()).toUri();
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedExpense.getId())
+                .toUri();
 
         return ResponseEntity.created(location).build();
     }
