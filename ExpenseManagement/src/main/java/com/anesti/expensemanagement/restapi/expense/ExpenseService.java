@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ExpenseService {
+class ExpenseService {
 
     @Autowired
     private AccountService accountService;
@@ -21,12 +21,12 @@ public class ExpenseService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
-    public List<Expense> getAccountExpenses(long accountId) {
+    List<Expense> getAccountExpenses(long accountId) {
         Account accountFromRepository = accountService.getAccountFromRepository(accountId);
         return new ArrayList<>(expenseRepository.findByAccountId(accountFromRepository.getId()));
     }
 
-    public Expense getExpenseFromAccount(long accountId, long expenseId) {
+    Expense getExpenseFromAccount(long accountId, long expenseId) {
         return expenseRepository.findByAccountId(accountId)
                 .stream()
                 .filter(expense -> expense.getId() == expenseId)
@@ -35,13 +35,13 @@ public class ExpenseService {
                         "with accountId " + accountId + " was not found."));
     }
 
-    public Expense addExpenseToAccount(long accountId, Expense expense) throws IOException, InterruptedException {
+    Expense addExpenseToAccount(long accountId, Expense expense) throws IOException, InterruptedException {
         Account accountFromRepository = accountService.getAccountFromRepository(accountId);
         ExpenseManager.addExpenseToAccount(accountFromRepository, expense);
         return expenseRepository.save(expense);
     }
 
-    public void deleteExpenseFromAccount(long accountId, long expenseId) {
+    void deleteExpenseFromAccount(long accountId, long expenseId) {
         Account accountFromRepository = accountService.getAccountFromRepository(accountId);
         Expense expense = getExpenseFromAccount(accountId, expenseId);
 

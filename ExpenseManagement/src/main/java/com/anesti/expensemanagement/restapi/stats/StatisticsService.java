@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class StatisticsService {
+class StatisticsService {
 
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Instance fields 
@@ -28,17 +28,17 @@ public class StatisticsService {
     //~ Methods 
     //~ ----------------------------------------------------------------------------------------------------------------
 
-    public double getSumOfExpensesOfMonth(long accountId, int year, Month month) {
+    double getSumOfExpensesOfMonth(long accountId, int year, Month month) {
         Account accountFromRepository = accountService.getAccountFromRepository(accountId);
         return StatisticsComputer.computeSumOfExpensesOfMonth(accountFromRepository, year, month);
     }
 
-    public Map<String, Double> getRatiosOfCategoriesForExpensesOfMonth(long accountId, int year, Month month) {
+    Map<String, Double> getRatiosOfCategoriesForExpensesOfMonth(long accountId, int year, Month month) {
         Account accountFromRepository = accountService.getAccountFromRepository(accountId);
         return StatisticsComputer.computeRatiosOfCategoriesForExpensesOfMonth(accountFromRepository, year, month);
     }
 
-    public List<Expense> getSortedExpensesOfMonthDescending(long accountId, int year, Month month) {
+    List<Expense> getSortedExpensesOfMonthDescending(long accountId, int year, Month month) {
         Account accountFromRepository = accountService.getAccountFromRepository(accountId);
         return StatisticsComputer.sortExpensesOfMonthDescending(accountFromRepository, year, month);
     }

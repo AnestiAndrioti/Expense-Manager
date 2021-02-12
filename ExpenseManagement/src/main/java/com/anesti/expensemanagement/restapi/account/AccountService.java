@@ -31,7 +31,7 @@ public class AccountService {
     //~ Methods 
     //~ ----------------------------------------------------------------------------------------------------------------
 
-    public List<Account> getAccounts() {
+    List<Account> getAccounts() {
         List<Account> accounts = new ArrayList<>();
         accountRepository.findAll().forEach(accounts::add);
         return accounts;
@@ -47,11 +47,11 @@ public class AccountService {
         }
     }
 
-    public Account addAccount(Account account) { 
+    Account addAccount(Account account) { 
         return accountRepository.save(account);
     }
 
-    public void deleteAccount(long accountId) {
+    void deleteAccount(long accountId) {
         Account account = getAccountFromRepository(accountId);
         accountRepository.delete(account);
     }
