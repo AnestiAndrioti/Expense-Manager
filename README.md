@@ -40,21 +40,21 @@ A static class where significant statistics are computed such as
 - ReST API
 This is the entrypoint of the application. The nice thing about this software is that the end user will run everything on the backend server. Their devices will just be used to send, receive, and display information.
 I tried to abide by the principles of ReST by aiming to have a high Richardson Maturity level. This was a key point for me as this was an investment that would generate an extensible software. (a few examples are, returning the correct HTTP code, having clear URL with no verbs, having clear messages in case of error, specifying the location of the next possible action after an execution, i.e. a post request to create an expense will indicate the url of the created expense and will return a 201 Created…)
-For now, here are the defined endpoints.
-
-    - GET /accounts
-    -	GET /accounts/{accountId}
-    -	POST /accounts
-    -	DELETE /accounts/{accountId}
-
-    -	GET /accounts/{accountId}/expenses
-    -	GET /accounts/{accountId}/expenses/{expenseId}
-    -	POST /accounts/{accountId}/expenses
-    -	DELETE /accounts/{accountId}/expenses/{expenseId}
-
-    -	GET /accounts/{accountId}/stats/sumOfExpenses/{year}/{month}
-    -	GET /accounts/{accountId}/stats/ratiosOfCategories/{year}/{month}
-    -	GET /accounts/{accountId}/stats/sortedExpenses/{year}/{month}
+For now, here are the defined entrypoints.
+    - Account endpoints
+        -   GET /accounts
+        -	GET /accounts/{accountId}
+        -	POST /accounts
+        -	DELETE /accounts/{accountId}
+    - Expense endpoints
+        -	GET /accounts/{accountId}/expenses
+        -	GET /accounts/{accountId}/expenses/{expenseId}
+        -	POST /accounts/{accountId}/expenses
+        -	DELETE /accounts/{accountId}/expenses/{expenseId}
+    - Statistics endpoints
+        -	GET /accounts/{accountId}/stats/sumOfExpenses/{year}/{month}
+        -	GET /accounts/{accountId}/stats/ratiosOfCategories/{year}/{month}
+        -	GET /accounts/{accountId}/stats/sortedExpenses/{year}/{month}
 
 
 # Possible Next steps
