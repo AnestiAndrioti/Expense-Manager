@@ -3,6 +3,7 @@ package com.anesti.expensemanagement;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,10 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AccountTest {
 
+    private static final LocalDateTime REF_DATE_TIME = LocalDateTime.of(2020, 11, 17, 8, 0);
+    
     @Test
     void canAddExpenseOfSameCurrency() throws IOException, InterruptedException {
-        var spotifyExpense = new Expense(1, "Spotify", new Money(Currency.USD, 5.0), "Music", "Lebanon");
-        var zwiftExpense = new Expense(2, "Zwift", new Money(Currency.USD, 15.0), "Sport", "USA");
+        var spotifyExpense = new Expense(1, "Spotify", new Money(Currency.USD, 5.0), REF_DATE_TIME,"Music", "Lebanon");
+        var zwiftExpense = new Expense(2, "Zwift", new Money(Currency.USD, 15.0), REF_DATE_TIME,"Sport", "USA");
 
         Account account = new Account(1, Currency.USD);
 
@@ -34,8 +37,8 @@ class AccountTest {
 
     @Test
     void canAddExpenseOfDifferentCurrencies() throws IOException, InterruptedException {
-        var spotifyExpense = new Expense(1, "Spotify", new Money(Currency.USD, 5.0), "Music", "Lebanon");
-        var tvExpense = new Expense(2, "tv", new Money(Currency.EUR, 15.0), "Entertainment", "Greece");
+        var spotifyExpense = new Expense(1, "Spotify", new Money(Currency.USD, 5.0), REF_DATE_TIME, "Music", "Lebanon");
+        var tvExpense = new Expense(2, "tv", new Money(Currency.EUR, 15.0), REF_DATE_TIME,"Entertainment", "Greece");
 
         assertTrue(tvExpense.getConvertedMoney().isEmpty());
 

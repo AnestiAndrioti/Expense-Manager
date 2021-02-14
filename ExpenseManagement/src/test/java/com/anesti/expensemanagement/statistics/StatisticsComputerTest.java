@@ -31,8 +31,8 @@ class StatisticsComputerTest {
     private static final String LEISURE = "Leisure";
     private static final String LEBANON = "Lebanon";
 
-    private static Account account = new Account(1, Currency.USD);
-    private static LocalDateTime refDateTime = LocalDateTime.of(2020, 11, 17, 8, 0);
+    private static final Account ACCOUNT = new Account(1, Currency.USD);
+    private static final LocalDateTime REF_DATE_TIME = LocalDateTime.of(2020, 11, 17, 8, 0);
 
     //~ ----------------------------------------------------------------------------------------------------------------
     //~ Methods 
@@ -42,27 +42,27 @@ class StatisticsComputerTest {
     static void setup() throws IOException, InterruptedException {
 
         for (int i = 1; i <= 3; ++i) {
-            var expenseSport = new Expense(i * 10, "expense-USD-sport-" + i, new Money(Currency.USD, 5.0), refDateTime, SPORT, LEBANON);
-            var expenseMedical = new Expense((i * 10) + 1, "expense-EUR-medical-" + i, new Money(Currency.USD, 5.0 + 1), refDateTime, MEDICAL, LEBANON);
-            var expenseTaxes = new Expense((i * 10) + 2, "expense-USD-taxes-" + i, new Money(Currency.USD, 5.0 + 2), refDateTime, TAXES, LEBANON);
-            var expenseLeisure = new Expense((i * 10) + 3, "expense-EUR-leisure-" + i, new Money(Currency.USD, 5.0 + i), refDateTime, LEISURE, LEBANON);
+            var expenseSport = new Expense(i * 10, "expense-USD-sport-" + i, new Money(Currency.USD, 5.0), REF_DATE_TIME, SPORT, LEBANON);
+            var expenseMedical = new Expense((i * 10) + 1, "expense-EUR-medical-" + i, new Money(Currency.USD, 5.0 + 1), REF_DATE_TIME, MEDICAL, LEBANON);
+            var expenseTaxes = new Expense((i * 10) + 2, "expense-USD-taxes-" + i, new Money(Currency.USD, 5.0 + 2), REF_DATE_TIME, TAXES, LEBANON);
+            var expenseLeisure = new Expense((i * 10) + 3, "expense-EUR-leisure-" + i, new Money(Currency.USD, 5.0 + i), REF_DATE_TIME, LEISURE, LEBANON);
 
-            ExpenseManager.addExpenseToAccount(account, expenseSport);
-            ExpenseManager.addExpenseToAccount(account, expenseMedical);
-            ExpenseManager.addExpenseToAccount(account, expenseTaxes);
-            ExpenseManager.addExpenseToAccount(account, expenseLeisure);
+            ExpenseManager.addExpenseToAccount(ACCOUNT, expenseSport);
+            ExpenseManager.addExpenseToAccount(ACCOUNT, expenseMedical);
+            ExpenseManager.addExpenseToAccount(ACCOUNT, expenseTaxes);
+            ExpenseManager.addExpenseToAccount(ACCOUNT, expenseLeisure);
         }
     }
 
     @Test
     void computeSumOfExpensesOfMonth() {
-        var totalExpensesOfMonth = StatisticsComputer.computeSumOfExpensesOfMonth(account, refDateTime.getYear(), refDateTime.getMonth());
+        var totalExpensesOfMonth = StatisticsComputer.computeSumOfExpensesOfMonth(ACCOUNT, REF_DATE_TIME.getYear(), REF_DATE_TIME.getMonth());
         assertEquals(75.00, totalExpensesOfMonth, 0.01);
     }
 
     @Test
     void computeRatiosOfCategoriesForExpensesOfMonth() {
-        var mapOfCategoriesRatios = StatisticsComputer.computeRatiosOfCategoriesForExpensesOfMonth(account, refDateTime.getYear(), refDateTime.getMonth());
+        var mapOfCategoriesRatios = StatisticsComputer.computeRatiosOfCategoriesForExpensesOfMonth(ACCOUNT, REF_DATE_TIME.getYear(), REF_DATE_TIME.getMonth());
 
         assertEquals(4, mapOfCategoriesRatios.size());
 
@@ -78,7 +78,7 @@ class StatisticsComputerTest {
 
     @Test
     void sortExpensesOfMonthDescending() {
-        var expenses = StatisticsComputer.sortExpensesOfMonthDescending(account, refDateTime.getYear(), refDateTime.getMonth());
+        var expenses = StatisticsComputer.sortExpensesOfMonthDescending(ACCOUNT, REF_DATE_TIME.getYear(), REF_DATE_TIME.getMonth());
         assertTrue(isSorted(expenses));
     }
 
@@ -86,8 +86,8 @@ class StatisticsComputerTest {
     void getPriceWithAccountCurrency() throws IOException, InterruptedException {
         Account accountInUSD = new Account(1, Currency.USD);
 
-        var expenseUSD = new Expense(1, "expense-USD", new Money(Currency.USD, 5.0), refDateTime, SPORT, LEBANON);
-        var expenseEUR = new Expense(2, "expense-EUR", new Money(Currency.EUR, 5.0), refDateTime, MEDICAL, LEBANON);
+        var expenseUSD = new Expense(1, "expense-USD", new Money(Currency.USD, 5.0), REF_DATE_TIME, SPORT, LEBANON);
+        var expenseEUR = new Expense(2, "expense-EUR", new Money(Currency.EUR, 5.0), REF_DATE_TIME, MEDICAL, LEBANON);
 
         assertEquals(expenseUSD.getMoney(), StatisticsComputer.getMoneyWithAccountCurrency(expenseUSD));
 

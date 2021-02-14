@@ -33,6 +33,7 @@ public class Account {
     //~ Constructors 
     //~ ----------------------------------------------------------------------------------------------------------------
 
+    // @VisibleForTesting
     public Account(long id, Currency currency) {
         this.id = id;
         this.currency = currency;

@@ -62,16 +62,7 @@ public class Expense {
     //~ Constructors 
     //~ ----------------------------------------------------------------------------------------------------------------
 
-    public Expense(long id, String name, Money money, String category, String country) {
-        this.id = id;
-        this.name = name;
-        this.money = new Money(money);
-        this.category = category;
-        this.country = country;
-        this.dateTime = LocalDateTime.now();
-    }
-
-    // Mainly used for testing to avoid randomness
+    // @VisibleForTesting
     public Expense(long id, String name, Money money, LocalDateTime dateTime, String category, String country) {
         this.id = id;
         this.name = name;

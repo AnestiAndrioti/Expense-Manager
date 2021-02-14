@@ -10,11 +10,7 @@ public class Money {
 
     private Currency currency;
     private double amount;
-
-    public Money(Money money) {
-        this(money.currency, money.getAmount());
-    }
-
+    
     public Money(Currency currency, double amount) {
         this.amount = checkAmount(amount);
         this.currency = currency;
