@@ -2,10 +2,11 @@ package com.anesti.expensemanagement.currencyconverter;
 
 import com.anesti.expensemanagement.Currency;
 import com.anesti.expensemanagement.Money;
-import org.junit.jupiter.api.Disabled;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 
 import java.io.IOException;
 
@@ -37,13 +38,12 @@ class CurrencyConverterTest {
     }
 
     @Test
-    @Disabled("Mockito has a bug while mocking static methods")
     void canConvertCurrencies() throws IOException, InterruptedException {
         Money oneDollar = new Money(Currency.USD, 1);
         Money hundredDollars = new Money(Currency.USD, 100);
 
-        try (MockedStatic<CurrencyConverter> currencyConverterMock = Mockito.mockStatic(CurrencyConverter.class)) {
-            currencyConverterMock.when(() -> CurrencyConverter.getRateFactor(Currency.USD, Currency.EUR)).thenCallRealMethod().thenReturn(0.92);
+        try (MockedStatic<CurrencyConverter> currencyConverterMock = Mockito.mockStatic(CurrencyConverter.class, InvocationOnMock::callRealMethod)) {
+            currencyConverterMock.when(() -> CurrencyConverter.getRateFactor(Currency.USD, Currency.EUR)).thenReturn(0.92);
 
             var convertDollar = CurrencyConverter.convertMoney(oneDollar, Currency.EUR);
             var convertedHundredDollars = CurrencyConverter.convertMoney(hundredDollars, Currency.EUR);
